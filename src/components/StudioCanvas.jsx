@@ -15,13 +15,14 @@ export function StudioCanvas({ headlightIntensity, isVibrating, onSceneReady }) 
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
-      36,
+      34, // Intimate, dramatic automotive focal length
       window.innerWidth / window.innerHeight,
       0.1,
       50
     );
-    camera.position.set(0, 0.72, 4.8);
-    camera.lookAt(0, 0.45, 0);
+    // Camera positioned to clearly frame front fascia, hood, windshield, and headlights
+    camera.position.set(0, 0.62, 4.15);
+    camera.lookAt(0, 0.42, 0);
 
     const renderer = createCinematicRenderer(canvas);
     rendererRef.current = renderer;
@@ -41,11 +42,11 @@ export function StudioCanvas({ headlightIntensity, isVibrating, onSceneReady }) 
 
       camera.aspect = width / height;
       if (width < 768) {
-        camera.position.set(0, 0.82, 5.8);
-        camera.fov = 42;
+        camera.position.set(0, 0.72, 5.2);
+        camera.fov = 40;
       } else {
-        camera.position.set(0, 0.72, 4.8);
-        camera.fov = 36;
+        camera.position.set(0, 0.62, 4.15);
+        camera.fov = 34;
       }
       camera.updateProjectionMatrix();
       renderer.setSize(width, height);

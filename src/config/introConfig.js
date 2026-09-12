@@ -1,8 +1,8 @@
 /**
  * Project DEMONDAD - Intro Dialogue & Cinematic Timing Configuration
  * 
- * Central configuration for opening dialogue, timings, typography positioning,
- * and headlight startup parameters.
+ * Central configuration for opening dialogue, timings, 2.5x scaled Urbanist
+ * typography layout, and ignition sequence timings.
  */
 
 export const INTRO_CONFIG = {
@@ -45,33 +45,24 @@ export const INTRO_CONFIG = {
     },
   ],
 
-  // Typography Layout & Positioning (Hard Requirement: Urbanist, 40% from left, vertically centered)
+  // Typography Layout & Positioning (Hard Requirement: Urbanist, 2.5x Scale, Mid-Left Anchor)
   typography: {
     fontFamily: "'Urbanist', sans-serif",
-    horizontalPosition: '40%', // Approximately 40% from the left
-    verticalPosition: '50%',   // Approximately vertically centered
+    horizontalPosition: '14%', // Mid-left compositional anchor
+    verticalPosition: '48%',   // Vertically centered
     color: '#ffffff',
-    fontSize: 'clamp(2.4rem, 4.8vw, 4.0rem)',
-    fontWeight: 600,
-    lineHeight: 1.18,
-    letterSpacing: '-0.025em',
-    maxWidth: '600px',
+    fontSize: 'clamp(3.6rem, 7.2vw, 6.2rem)', // ~2.5x larger than standard text
+    fontWeight: 700,
+    lineHeight: 1.1,
+    letterSpacing: '-0.035em',
+    maxWidth: '850px',
   },
 
-  // Headlight Startup Stage Timings (in milliseconds after car reveal)
-  headlightSequence: {
-    revealFadeIn: 1500,     // Studio car fades in from darkness
-    awakeningDelay: 500,    // Stage 1: Subtle awakening
-    blink1Duration: 180,    // Stage 2: First blink
-    pause1: 450,            // Stage 3: Short pause
-    blink2Duration: 240,    // Stage 4: Second controlled blink
-    pause2: 250,
-    fullPowerDuration: 650, // Stage 5: Headlights power fully ON
-  },
-
-  // Audio assets
+  // Audio assets (Authentic starter crank, V12 roar, and continuous running idle)
   audio: {
-    v12Engine: '/audio/v12-engine-startup.mp3',
+    starterCrank: '/audio/starter-crank.mp3',
+    v12Startup: '/audio/v12-f12-startup.mp3',
+    v12Idle: '/audio/v12-f12-startup.mp3',
   },
 
   // 3D Model assets

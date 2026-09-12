@@ -29,11 +29,11 @@
   display: block;
 }
 
-/* Story-First Dialogue Typography */
+/* Story-First Dialogue Typography (2.5x Scale, Mid-Left Composition) */
 .dialogue-container {
   z-index: 10;
   pointer-events: none;
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), filter 0.85s ease;
 }
 
 .dialogue-visible {
@@ -44,27 +44,27 @@
 
 .dialogue-hidden {
   opacity: 0;
-  transform: translateY(-50%) translateY(8px);
-  filter: blur(4px);
+  transform: translateY(-50%) translateY(12px);
+  filter: blur(6px);
 }
 
 .dialogue-text {
   font-family: 'Urbanist', sans-serif;
-  text-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+  text-shadow: 0 0 40px rgba(255, 255, 255, 0.25);
 }
 
 @media (max-width: 768px) {
   .dialogue-container {
-    left: 10% !important;
-    max-width: 80% !important;
-    font-size: clamp(1.8rem, 6.5vw, 2.6rem) !important;
+    left: 8% !important;
+    max-width: 84% !important;
+    font-size: clamp(2.4rem, 8.5vw, 3.8rem) !important;
   }
 }
 
 /* Single START ENGINE Button */
 .start-engine-container {
   position: absolute;
-  bottom: 8%;
+  bottom: 9%;
   left: 50%;
   transform: translateX(-50%);
   z-index: 20;
@@ -80,26 +80,26 @@
 
 .btn-start-engine {
   position: relative;
-  background: rgba(12, 16, 24, 0.85);
+  background: rgba(10, 14, 22, 0.88);
   color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 16px 36px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  padding: 18px 42px;
   font-family: 'Urbanist', sans-serif;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.26em;
   text-transform: uppercase;
   border-radius: 2px;
   cursor: pointer;
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
   outline: none;
 }
 
 .btn-start-engine:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.6);
-  box-shadow: 0 0 28px rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 32px rgba(255, 255, 255, 0.28);
   transform: translateY(-2px);
 }
 
@@ -108,9 +108,9 @@
 }
 
 .btn-start-engine.engine-active {
-  background: rgba(225, 29, 72, 0.25);
-  border-color: rgba(225, 29, 72, 0.8);
-  box-shadow: 0 0 32px rgba(225, 29, 72, 0.4);
+  background: rgba(225, 29, 72, 0.28);
+  border-color: rgba(225, 29, 72, 0.85);
+  box-shadow: 0 0 36px rgba(225, 29, 72, 0.45);
   cursor: default;
 }
 

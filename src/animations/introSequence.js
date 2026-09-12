@@ -2,22 +2,13 @@ import { createTimeline, animate } from 'animejs';
 import { INTRO_CONFIG } from '../config/introConfig';
 
 /**
- * introSequence - Centralized Anime.js v4 timeline orchestrating the story-first intro:
- * 1. Dialogue line 1 ("Dad, Dad!!") -> 3s visible
- * 2. 2-second pure black silence
- * 3. Dialogue line 2 ("Yes, son?")
- * 4. Dialogue line 3 ("Do machines have a soul?")
- * 5. Dialogue line 4 ("Shhhhh...")
- * 6. Dialogue line 5 ("Listen... closely.")
- * 7. Silence & Car Studio Reveal
- * 8. Headlight Sequence (Awaken -> Blink 1 -> Pause -> Blink 2 -> Full ON)
- * 9. Trigger single "START ENGINE" button appearance
+ * startIntroSequence - Orchestrates dialogue sequence and car reveal.
+ * NOTE: Headlights remain OFF when car is revealed!
  */
 export function startIntroSequence({
   onDialogueChange,
   onStudioOpacityChange,
-  onHeadlightChange,
-  onSequenceComplete,
+  onReadyForStart,
   reducedMotion = false,
 }) {
   const tl = createTimeline();
@@ -25,8 +16,7 @@ export function startIntroSequence({
   if (reducedMotion) {
     onDialogueChange(null);
     onStudioOpacityChange(1.0);
-    onHeadlightChange(1.0);
-    if (onSequenceComplete) onSequenceComplete();
+    if (onReadyForStart) onReadyForStart();
     return {
       pause: () => {},
       destroy: () => {},
@@ -35,8 +25,9 @@ export function startIntroSequence({
 
   let currentTime = 300;
 
-  // 1. DIALOGUE SEQUENCE
+  // 1. STORY-FIRST DIALOGUE SEQUENCE
   INTRO_CONFIG.dialogue.forEach((item, index) => {
+    // Line enters
     tl.call(() => {
       onDialogueChange({
         text: item.text,
@@ -48,6 +39,7 @@ export function startIntroSequence({
 
     currentTime += item.duration;
 
+    // Line exits
     tl.call(() => {
       onDialogueChange({
         text: item.text,
@@ -57,80 +49,25 @@ export function startIntroSequence({
       });
     }, currentTime);
 
+    // Pure black silence (Line 1 has the mandatory 2.0s silence)
     currentTime += item.pauseAfter;
   });
 
-  // 2. STUDIO CAR REVEAL
+  // 2. STUDIO CAR REVEAL (Headlights remain OFF!)
   const studioState = { opacity: 0 };
   tl.add(studioState, {
     opacity: 1.0,
-    duration: INTRO_CONFIG.headlightSequence.revealFadeIn,
+    duration: 1600,
     ease: 'outQuad',
     onUpdate: () => onStudioOpacityChange(studioState.opacity),
   }, currentTime);
 
-  currentTime += INTRO_CONFIG.headlightSequence.revealFadeIn + INTRO_CONFIG.headlightSequence.awakeningDelay;
+  currentTime += 1600 + 400;
 
-  // 3. HEADLIGHT STARTUP CHOREOGRAPHY
-  const lightState = { intensity: 0 };
-  const updateLight = () => onHeadlightChange(lightState.intensity);
-
-  // Stage 1: Subtle awakening glow
-  tl.add(lightState, {
-    intensity: 0.15,
-    duration: 350,
-    ease: 'outQuad',
-    onUpdate: updateLight,
-  }, currentTime);
-  currentTime += 400;
-
-  // Stage 2: First Headlight Flicker / Blink
-  tl.add(lightState, {
-    intensity: 0.85,
-    duration: 60,
-    ease: 'linear',
-    onUpdate: updateLight,
-  }, currentTime);
-  currentTime += 60;
-
-  tl.add(lightState, {
-    intensity: 0.0,
-    duration: 100,
-    ease: 'outQuad',
-    onUpdate: updateLight,
-  }, currentTime);
-  currentTime += INTRO_CONFIG.headlightSequence.pause1; // Stage 3: Pause
-
-  // Stage 4: Second Controlled Blink
-  tl.add(lightState, {
-    intensity: 0.95,
-    duration: 80,
-    ease: 'linear',
-    onUpdate: updateLight,
-  }, currentTime);
-  currentTime += 80;
-
-  tl.add(lightState, {
-    intensity: 0.1,
-    duration: 90,
-    ease: 'outQuad',
-    onUpdate: updateLight,
-  }, currentTime);
-  currentTime += INTRO_CONFIG.headlightSequence.pause2;
-
-  // Stage 5: Headlights Power Fully ON
-  tl.add(lightState, {
-    intensity: 1.0,
-    duration: INTRO_CONFIG.headlightSequence.fullPowerDuration,
-    ease: 'outCubic',
-    onUpdate: updateLight,
-  }, currentTime);
-  currentTime += INTRO_CONFIG.headlightSequence.fullPowerDuration + 300;
-
-  // 4. REVEAL EXACTLY ONE BUTTON: START ENGINE
+  // 3. READY FOR START (Reveals exactly ONE button: START ENGINE)
   tl.call(() => {
-    if (onSequenceComplete) {
-      onSequenceComplete();
+    if (onReadyForStart) {
+      onReadyForStart();
     }
   }, currentTime);
 
@@ -140,4 +77,70 @@ export function startIntroSequence({
       if (tl.revert) tl.revert();
     }
   };
+}
+
+/**
+ * startHeadlightIgnition - Orchestrates the electrical startup flicker
+ * when the user clicks START ENGINE.
+ */
+export function startHeadlightIgnition({ onUpdate, onComplete }) {
+  const lightState = { intensity: 0 };
+  const updateLight = () => onUpdate(lightState.intensity);
+
+  const tl = createTimeline({
+    onComplete: () => {
+      if (onComplete) onComplete();
+    }
+  });
+
+  // Stage 1: Subtle electrical awakening glow
+  tl.add(lightState, {
+    intensity: 0.15,
+    duration: 250,
+    ease: 'outQuad',
+    onUpdate: updateLight,
+  }, 0);
+
+  // Stage 2: First Headlight Flicker / Blink
+  tl.add(lightState, {
+    intensity: 0.85,
+    duration: 50,
+    ease: 'linear',
+    onUpdate: updateLight,
+  }, 250);
+
+  tl.add(lightState, {
+    intensity: 0.0,
+    duration: 80,
+    ease: 'outQuad',
+    onUpdate: updateLight,
+  }, 300);
+
+  // Stage 3: Short Pause
+  // (380ms - 560ms)
+
+  // Stage 4: Second Controlled Blink
+  tl.add(lightState, {
+    intensity: 0.95,
+    duration: 70,
+    ease: 'linear',
+    onUpdate: updateLight,
+  }, 560);
+
+  tl.add(lightState, {
+    intensity: 0.15,
+    duration: 70,
+    ease: 'outQuad',
+    onUpdate: updateLight,
+  }, 630);
+
+  // Stage 5: Headlights Power Fully ON (Synchronized with engine catching!)
+  tl.add(lightState, {
+    intensity: 1.0,
+    duration: 550,
+    ease: 'outCubic',
+    onUpdate: updateLight,
+  }, 750);
+
+  return tl;
 }
