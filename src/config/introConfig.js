@@ -6,56 +6,56 @@
  */
 
 export const INTRO_CONFIG = {
-  // Opening dialogue sequence lines & pauses
+  // Opening dialogue sequence lines & pauses (tightened by 1.5s for natural conversation flow)
   dialogue: [
     {
       id: 'line-1',
       speaker: 'Kid',
       text: 'Dad, Dad!!',
-      duration: 3000,   // Stays visible for ~3 seconds
-      pauseAfter: 2000, // Exactly 2 seconds pure black silence (Hard Requirement)
+      duration: 2200,   // Reduced from 3000ms
+      pauseAfter: 1500, // Reduced from 2000ms
     },
     {
       id: 'line-2',
       speaker: 'Father',
       text: 'Yes, son?',
-      duration: 2600,
-      pauseAfter: 1500,
+      duration: 1800,   // Reduced from 2600ms
+      pauseAfter: 1000, // Reduced from 1500ms
     },
     {
       id: 'line-3',
       speaker: 'Kid',
       text: 'Do machines have a soul?',
-      duration: 3200,
-      pauseAfter: 1600,
+      duration: 2200,   // Reduced from 3200ms
+      pauseAfter: 1000, // Reduced from 1600ms
     },
     {
       id: 'line-4',
       speaker: 'Father',
       text: 'Shhhhh...',
-      duration: 2400,
-      pauseAfter: 1500,
+      duration: 1600,   // Reduced from 2400ms
+      pauseAfter: 1000, // Reduced from 1500ms
     },
     {
       id: 'line-5',
       speaker: 'Father, whispering',
       text: 'Listen... closely.',
-      duration: 3000,
-      pauseAfter: 1800, // Silence before car reveal
+      duration: 2000,   // Reduced from 3000ms
+      pauseAfter: 1200, // Reduced from 1800ms
     },
   ],
 
-  // Typography Layout & Positioning (Hard Requirement: Urbanist, 2.5x Scale, Mid-Left Anchor)
+  // Typography Layout & Positioning (Hard Requirement: Urbanist, ~2x Larger Scale, Mid-Left Anchor)
   typography: {
     fontFamily: "'Urbanist', sans-serif",
-    horizontalPosition: '14%', // Mid-left compositional anchor
+    horizontalPosition: '10%', // Compositional mid-left anchor
     verticalPosition: '48%',   // Vertically centered
     color: '#ffffff',
-    fontSize: 'clamp(3.6rem, 7.2vw, 6.2rem)', // ~2.5x larger than standard text
-    fontWeight: 700,
-    lineHeight: 1.1,
-    letterSpacing: '-0.035em',
-    maxWidth: '850px',
+    fontSize: 'clamp(5.8rem, 11.5vw, 9.8rem)', // ~2x larger scale
+    fontWeight: 800,
+    lineHeight: 0.98,
+    letterSpacing: '-0.04em',
+    maxWidth: '1300px',
   },
 
   // Audio assets (Authentic starter crank, V12 roar, and continuous running idle)

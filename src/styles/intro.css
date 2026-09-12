@@ -55,9 +55,9 @@
 
 @media (max-width: 768px) {
   .dialogue-container {
-    left: 8% !important;
-    max-width: 84% !important;
-    font-size: clamp(2.4rem, 8.5vw, 3.8rem) !important;
+    left: 6% !important;
+    max-width: 88% !important;
+    font-size: clamp(3.2rem, 11vw, 5.0rem) !important;
   }
 }
 

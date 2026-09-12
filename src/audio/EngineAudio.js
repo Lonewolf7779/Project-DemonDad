@@ -58,13 +58,14 @@ class EngineAudio {
     this.starterAudio.play().catch(() => {});
     if (onStarterStart) onStarterStart();
 
-    // Phase 2 (T = 650ms): Headlights begin electrical flicker
+    // Phase 2 (T = 2400ms): Headlights begin electrical flicker towards end of starter cycle
     setTimeout(() => {
       if (!this.isPlaying) return;
       if (onHeadlightTrigger) onHeadlightTrigger();
-    }, 650);
+    }, 2400);
 
-    // Phase 3 (T = 1400ms): Engine Catches -> V12 Roar + Throttle Blips
+    // Phase 3 (T = 3200ms -> At least 3 seconds of starter cranking!):
+    // Engine Catches -> V12 Roar + Throttle Blips
     setTimeout(() => {
       if (!this.isPlaying) return;
 
@@ -79,13 +80,13 @@ class EngineAudio {
       this.engineAudio.play().catch(() => {});
       if (onEngineCatch) onEngineCatch();
 
-      // Phase 4: Sequence finishes after ~9.0 seconds of realistic revs & idle settle
+      // Phase 4: Sequence finishes after ~8.8 seconds of realistic revs & idle settle
       // Fade out smoothly and trigger transition to Scene 2
       setTimeout(() => {
         if (!this.isPlaying) return;
         this.fadeAndStop(1200, onEngineSequenceComplete);
       }, 8800);
-    }, 1400);
+    }, 3200);
   }
 
   /**
