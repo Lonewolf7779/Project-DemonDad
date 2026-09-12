@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="12" fill="#07080a"/>
+  <!-- Sports car light blade emblem -->
+  <path d="M12 28 L32 20 L52 28 L46 36 L32 30 L18 36 Z" fill="#ffffff" filter="drop-shadow(0 0 8px #4deeea)"/>
+  <path d="M22 42 L32 38 L42 42 L38 46 L32 44 L26 46 Z" fill="#e11d48" filter="drop-shadow(0 0 6px #e11d48)"/>
+</svg>
