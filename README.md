@@ -1,144 +1,99 @@
 # PROJECT DEMONDAD
 
-> **The Machine Awakes** — A cinematic, luxury sports-car showcase web experience.
+> **The Machine Awakes** — A cinematic luxury sports-car experience.
 
 ---
 
 ## 1. Project Overview
 
-**DEMONDAD** is NOT a traditional static car catalog. It is an immersive, game-like automotive showcase built around dynamic cinematic staging, realistic lighting, and machine power-up experiences.
+**DEMONDAD** is a story-first, cinematic automotive showcase.
 
-### Milestone 1: Headlight Startup Experience
-This initial milestone delivers the opening visual sequence:
-* Atmospheric, dark studio environment framing an aggressive sports-car front fascia.
-* Multi-stage electrical headlight startup powered by **Anime.js v4**:
-  1. **Standby**: Deep darkness with silhouette edge lighting.
-  2. **DRL Blade Awakening**: Crisp voltage pulse into angular LED running lights with mechanical relay feedback.
-  3. **High-Voltage Arc Strike**: Micro-flickering xenon ballast discharge sparks.
-  4. **Laser Projector Lock**: Deep ignition thud and volumetric beam expansion cutting through the fog.
-  5. **Online & Breathing**: Steady 6000K illumination with subtle living pulse.
-* Zero-dependency procedural **Web Audio API** synthesizer for realistic electrical ignition sound effects.
-* Full **Accessibility (`prefers-reduced-motion`)** support.
+### The First Experience
+1. **Black Screen Opening**:
+   The website opens into silence and cinematic dialogue using **Urbanist** typography positioned 40% from the left:
+   - *"Dad, Dad!!"* (3 seconds)
+   - *2 seconds of pure black silence*
+   - *"Yes, son?"*
+   - *"Do machines have a soul?"*
+   - *"Shhhhh..."*
+   - *"Listen... closely."*
+2. **Dark Studio Car Reveal**:
+   The darkness parts to reveal a real 3D sports car in a moody dark automotive studio with soft top lighting and ground reflections.
+3. **Headlight Startup**:
+   The sports-car headlights undergo a multi-stage electrical startup (awakening -> blink 1 -> pause -> blink 2 -> fully illuminated 6000K beam).
+4. **Single Interactive Button**:
+   Exactly **ONE** button appears: **START ENGINE**.
+5. **Authentic V12 Startup**:
+   Clicking **START ENGINE** fires an authentic sports-car V12 starter crank and roaring combustion idle.
 
 ---
 
 ## 2. Tech Stack
 
-* **React 18**: UI component tree, lifecycle coordination, state management.
-* **Vite 6**: Ultra-fast build tool and development server.
-* **Three.js**: WebGL 3D rendering pipeline, ACES Filmic Tone Mapping, PBR materials, spot/point lighting, and volumetric light shafts.
-* **Anime.js v4**: Complex timeline animation orchestrator controlling multi-channel light intensities and voltage surges.
-* **Web Audio API**: Real-time procedural audio synthesis for ignition relays, ballast whine, and projector thuds.
-* **CSS**: Clean custom styling with film scanlines, vignettes, and telemetry HUD overlays.
+* **React 18**: View tree, story state coordination, and lifecycle management.
+* **Three.js**: Real 3D sports-car rendering (`sports-car.glb`), ACES Filmic Tone Mapping, PBR automotive paint, glass optics, and volumetric lighting.
+* **Anime.js v4**: Centralized timeline orchestrator managing dialogue, pauses, studio transitions, and headlight blinks.
+* **Web Audio API / HTML5 Audio**: Playback of genuine V12 engine startup audio (`v12-engine-startup.mp3`).
+* **Urbanist Font**: Hard requirement typography from Google Fonts.
 
 ---
 
-## 3. Directory Architecture & Future Extension Guide
-
-The codebase is organized for modular scalability:
+## 3. Directory Structure
 
 ```
 DemonDAD/
-├── index.html                      # HTML entry with font preconnections
-├── vite.config.js                  # Vite configuration
-├── package.json                    # Project dependencies (all project-local)
-├── README.md                       # Project manual & onboarding guide
+├── index.html                               # Urbanist font import & meta
+├── vite.config.js                           # Bundler configuration
+├── package.json                             # Local dependencies
+├── README.md                                # Project documentation
 ├── public/
-│   ├── favicon.svg                 # Brand mark icon
-│   └── models/                     # [FUTURE] Place GLTF/GLB 3D car models here
+│   ├── favicon.svg                          # Minimal brand icon
+│   ├── models/
+│   │   └── sports-car.glb                   # Real 3D sports car model (1.68 MB)
+│   └── audio/
+│       └── v12-engine-startup.mp3           # Authentic V12 engine startup audio
 └── src/
-    ├── main.jsx                    # Application bootstrap
-    ├── App.jsx                     # Root coordinator & state manager
-    │
-    ├── animations/                 # Anime.js timelines & easing curves
-    │   ├── headlightSequence.js    # Multi-stage electrical startup timeline
-    │   └── easings.js              # Custom automotive easing bezier curves
-    │
-    ├── audio/                      # Audio engines & synthesizers
-    │   └── SoundManager.js         # Web Audio API procedural ignition engine
-    │
-    ├── components/
-    │   ├── canvas/
-    │   │   └── ExperienceCanvas.jsx # Three.js WebGL canvas wrapper & lifecycle
-    │   ├── ui/
-    │   │   ├── BrandHeader.jsx     # Header branding & live status badge
-    │   │   ├── TelemetryHUD.jsx    # Real-time power/lumen telemetry card
-    │   │   └── Controls.jsx        # Re-ignite, audio, and motion controls
-    │   └── common/
-    │       └── CinematicOverlay.jsx# Vignette, scanlines, and flare pulses
-    │
+    ├── main.jsx                             # Application bootstrap
+    ├── App.jsx                              # Story coordinator & state manager
     ├── config/
-    │   └── carConfig.js            # Vehicle parameters, colors, lumens, timings
-    │
+    │   └── introConfig.js                   # Dialogue lines, timings, & typography config
+    ├── animations/
+    │   └── introSequence.js                 # Centralized Anime.js v4 intro timeline
+    ├── audio/
+    │   └── EngineAudio.js                   # V12 engine audio player
     ├── scenes/
-    │   ├── HeadlightScene.js       # Three.js scene (lighting, optics, beams)
-    │   └── placeholders/
-    │       └── CarModelPlaceholder.js # Dedicated hook for future 3D car model
-    │
+    │   └── StudioCarScene.js                # Three.js studio environment, 3D car, & headlight rigs
+    ├── components/
+    │   ├── DialogueOverlay.jsx              # Urbanist typography positioned at 40% left
+    │   ├── StudioCanvas.jsx                 # Three.js WebGL canvas & render loop
+    │   └── StartEngineButton.jsx            # Exactly ONE "START ENGINE" button
     ├── styles/
-    │   ├── index.css               # Reset styles, variables, typography
-    │   └── cinematic.css           # HUD, overlays, and responsive styling
-    │
+    │   ├── index.css                        # Reset styles, black background
+    │   └── intro.css                        # Dialogue typography & button styling
     └── utils/
-        ├── motion.js               # Accessibility & reduced motion utilities
-        └── threeHelpers.js         # Tone mapping, renderer setup, cleanup helpers
+        ├── motion.js                        # prefers-reduced-motion detector
+        └── threeHelpers.js                  # ACES Filmic tone mapping & scene disposal
 ```
 
 ---
 
-## 4. Guide for Future Developers & AI Agents
-
-### How to Add the Real 3D Sports-Car Model (Milestone 2)
-1. Place your model in `public/models/demon-gt1.glb`.
-2. Open [`src/scenes/placeholders/CarModelPlaceholder.js`](src/scenes/placeholders/CarModelPlaceholder.js).
-3. Import `GLTFLoader` and use the built-in `attachLoadedModel(gltf.scene)` method.
-4. The lighting rigs and animation targets in [`src/scenes/HeadlightScene.js`](src/scenes/HeadlightScene.js) will automatically light up your imported car model.
-
-### How to Add Audio Tracks
-1. Procedural sound synthesis is managed in [`src/audio/SoundManager.js`](src/audio/SoundManager.js).
-2. For custom recorded engine audio (`.mp3`/`.wav`/`.ogg`), place files in `public/audio/` and instantiate Web Audio buffers inside `SoundManager.js`.
-
-### How to Add Camera Choreography / Scroll Animations
-1. Use `ExperienceCanvas.jsx` to bind camera position / lookAt targets to Anime.js timelines or scroll listeners.
-2. Maintain the isolated rendering pipeline in `ExperienceCanvas.jsx`.
-
----
-
-## 5. Getting Started
-
-### Prerequisites
-* **Node.js**: v18.0+ or v20.0+
-* **npm**: v9.0+
-
-> **Company Laptop Safe**: No global packages or administrator privileges are required.
-
-### Installation & Running Locally
+## 4. Running the Project
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/Lonewolf7779/Project-DemonDad.git
-cd DemonDAD
-
-# 2. Install dependencies locally
+# Install local dependencies
 npm install
 
-# 3. Start development server
+# Start development server
 npm run dev
-```
 
-Visit `http://localhost:5173` in your browser.
-
-### Building for Production
-
-```bash
+# Or build for production
 npm run build
 npm run preview
 ```
 
 ---
 
-## 6. Verification & Quality Standards
+## 5. Assets & Licenses
 
-* **No Memory Leaks**: All Three.js geometries, materials, and Anime.js timelines are cleanly disposed on unmount.
-* **Performance**: Pixel ratio clamped at `2.0`, tone-mapped with ACES Filmic, lightweight geometry buffers.
-* **Accessibility**: Respects OS `prefers-reduced-motion` preferences.
+* **3D Model**: `sports-car.glb` sourced from Three.js official examples (MIT License).
+* **V12 Engine Audio**: `v12-engine-startup.mp3` sourced from open automotive sound archives.

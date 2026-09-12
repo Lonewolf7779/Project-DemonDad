@@ -1,0 +1,120 @@
+/* DEMONDAD - Cinematic Minimal Story Experience */
+
+.demondad-viewport {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000000;
+  overflow: hidden;
+}
+
+/* 3D Dark Studio Layer */
+.studio-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.studio-canvas-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.studio-canvas-wrapper canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Story-First Dialogue Typography */
+.dialogue-container {
+  z-index: 10;
+  pointer-events: none;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dialogue-visible {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+  filter: blur(0px);
+}
+
+.dialogue-hidden {
+  opacity: 0;
+  transform: translateY(-50%) translateY(8px);
+  filter: blur(4px);
+}
+
+.dialogue-text {
+  font-family: 'Urbanist', sans-serif;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+  .dialogue-container {
+    left: 10% !important;
+    max-width: 80% !important;
+    font-size: clamp(1.8rem, 6.5vw, 2.6rem) !important;
+  }
+}
+
+/* Single START ENGINE Button */
+.start-engine-container {
+  position: absolute;
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  opacity: 0;
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: auto;
+}
+
+.start-engine-container.button-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.btn-start-engine {
+  position: relative;
+  background: rgba(12, 16, 24, 0.85);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 16px 36px;
+  font-family: 'Urbanist', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(12px);
+  outline: none;
+}
+
+.btn-start-engine:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 0 28px rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.btn-start-engine:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn-start-engine.engine-active {
+  background: rgba(225, 29, 72, 0.25);
+  border-color: rgba(225, 29, 72, 0.8);
+  box-shadow: 0 0 32px rgba(225, 29, 72, 0.4);
+  cursor: default;
+}
+
+.btn-label {
+  position: relative;
+  z-index: 2;
+}
